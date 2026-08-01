@@ -104,4 +104,4 @@ Ce projet a été développé avec une attention particulière aux mesures de s�
 
 ## Rapport
 
-Le rapport complet du projet est disponible ici : [`docs/Rapport-Final.pdf`](./docs/Rapport-Final.pdf)
+Le rapport complet du projet est disponible ici : [`docs/Rapport-Final.pdf`](./docs/Rapport-Final-S7_Projet-EA-SA_Niryo-Ned2.pdf)
