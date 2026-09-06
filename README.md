@@ -1,107 +1,76 @@
-# niryo-ned2-sim2real-pickplace
+# Niryo Ned2 — du paramétrage à la simulation robotique
 
-**Projet robotique Niryo Ned2 (Python) — saisie de paramètres (Tkinter) → simulation RoboDK → exécution réelle PyNiryo. Démo pick-and-place et pyramide, approche sim2real avec validation en simulation avant déploiement.**
+**Robotique collaborative · Python · Tkinter · RoboDK · PyNiryo**
 
-**Cours :** EA Systèmes Avancés — Projet de qualification fonctionnelle d'une plateforme robotique collaborative  
-**Institution :** INSA Centre Val de Loire  
-**Étudiants :** Alae Zerrouq, Adam Aoubiza  
-**Encadrant :** Vincent Idasiak
+Projet de qualification fonctionnelle d'une plateforme robotique collaborative réalisé à **l'INSA Centre Val de Loire**, dans le cadre du cours **EA Systèmes Avancés**.
 
----
+**Équipe : Alae Zerrouq et Adam Aoubiza** · **Encadrant : Vincent Idasiak**
 
-## Objectif
+## Le projet en quelques mots
 
-Ce dépôt propose un workflow complet **simulation → réel** pour exécuter des mouvements sur un robot Niryo Ned2 :
+Concevoir une chaîne de commande pour un bras **Niryo Ned2** : saisir un scénario de manipulation, visualiser les déplacements dans RoboDK, puis préparer leur transposition vers le robot avec PyNiryo. Deux scénarios sont explorés : le **pick-and-place** et l'**empilement / désempilement** appelé « pyramide » dans les scripts.
 
-1. Saisie des paramètres via une interface utilisateur Tkinter
-2. Simulation des trajectoires dans RoboDK
-3. Exécution réelle sur le robot via PyNiryo
+Ce dépôt rassemble le code académique et les documents du projet. Les scripts de simulation et d'exécution comportent des défauts identifiés ; leur remise en état est nécessaire avant une exécution complète. Le [statut technique](docs/STATUT_TECHNIQUE.md) distingue précisément les éléments disponibles et les limites.
 
-Deux modes sont pris en charge :
+## Compétences mises en pratique
 
-- `Pickandplace` : enchaînement de mouvements entre paires de coordonnées
-- `Pyramide` : construction et déconstruction d'une pyramide d'objets autour d'un centre
+| Compétence | Réalisation dans le dépôt |
+|---|---|
+| Interface opérateur | Formulaire Tkinter et sérialisation des paramètres |
+| Programmation robotique | Séquences de déplacement, saisie, dépose et retour à une pose de référence |
+| Simulation hors ligne | Intégration de l'API RoboDK et chargement d'un modèle de robot |
+| Intégration matériel / logiciel | Utilisation prévue de PyNiryo, poses et commande de l'outil |
+| Transfert simulation-réel | Mise en relation des scénarios simulés et des mouvements physiques |
+| Documentation technique | Rapport de projet et fiche de sécurité |
 
----
+Les contributions sont présentées comme celles de l'équipe ; aucune répartition individuelle non documentée n'est attribuée.
 
-## Structure du projet
+## Architecture prévue
 
+```mermaid
+flowchart LR
+    UI["Interface Tkinter"] --> DATA["Fichier de paramètres"]
+    DATA --> SIM["Simulation RoboDK"]
+    DATA --> REAL["Exécution PyNiryo"]
+    SIM -. "Vérification opérateur prévue" .-> REAL
 ```
+
+Le passage simulation → réel est une démarche opérateur : le code ne contient pas de mécanisme automatique certifiant qu'une trajectoire a été validée en simulation.
+
+## Explorer le dépôt
+
+```text
+├── README.md
 ├── scripts/
-│   ├── ui_parametres.py        # Interface Tkinter — saisie des paramètres
-│   ├── simulation_robodk.py    # Simulation des trajectoires dans RoboDK
-│   ├── execution_robot.py      # Exécution réelle sur le robot Niryo Ned2
-│   └── demo_pyramide.py        # Script de démonstration du mode pyramide
-├── docs/
-│   └── Rapport-Final.pdf       # Rapport complet du projet
-├── assets/                     # GIFs et captures d'écran (à compléter)
-└── README.md
+│   ├── ui_parametres.py       # Saisie et sauvegarde des paramètres
+│   ├── simulation_robodk.py   # Prototype de simulation
+│   ├── execution_robot.py    # Prototype d'exécution, incomplet
+│   └── demo_pyramide.py      # Ébauche de démonstration
+└── docs/
+    ├── README.md             # Index documentaire
+    ├── UTILISATION.md        # Prérequis et format des données
+    ├── STATUT_TECHNIQUE.md    # Défauts connus et périmètre vérifié
+    └── *.pdf                 # Rapport original et fiche de sécurité
 ```
 
----
+**Parcours conseillé :** consulter le [rapport](docs/Rapport-Final-S7_Projet-EA-SA_Niryo-Ned2.pdf), lire le [guide d'utilisation](docs/UTILISATION.md), puis explorer les scripts et leur [état technique](docs/STATUT_TECHNIQUE.md).
 
-## Prérequis
+## Démarrer avec l'interface
 
-### Simulation (RoboDK)
-- RoboDK installé + API Python RoboDK (fournie avec RoboDK)
-- Fichier robot Niryo Ned2 (`.robot`) téléchargé depuis la bibliothèque RoboDK
-
-### Exécution réelle (Niryo)
-- Robot Niryo Ned2 accessible sur le réseau (IP par défaut : `10.10.10.10`)
-- PyNiryo installé : `pip3 install pyniryo`
-- NiryoStudio ouvert et connecté au robot
-- Zone de travail dégagée + opérateur prêt à l'arrêt d'urgence
-
----
-
-## Guide d'utilisation
-
-### Étape 1 — Saisir les paramètres (UI)
-
-Lance l'interface Tkinter, remplis les champs (programme, coordonnées, hauteur, centre), puis clique sur **Valider** et ferme la fenêtre.
+L'interface nécessite Python 3 et Tkinter. Depuis la racine du dépôt, dans une session graphique :
 
 ```bash
+python -m tkinter
 python scripts/ui_parametres.py
 ```
 
-Exemple de saisie :
-- Programme : `Pickandplace` ou `Pyramide`
-- Coordonnées : `[300,200,300] [200,200,200]`
-- Hauteur : `0`
-- Centre (pour le mode Pyramide) : `[300,200,300]`
+Le premier appel permet de vérifier Tkinter. Le second ouvre le formulaire ; le bouton **Valider** écrit `Données pour Niryo.txt` dans le répertoire courant. La saisie n'est pas validée automatiquement.
 
----
+RoboDK, son modèle `Niryo-Ned2.robot` et PyNiryo ne sont pas nécessaires pour consulter les documents ou ouvrir ce formulaire. Les prérequis des autres composants sont détaillés dans le guide.
 
-### Étape 2 — Simuler dans RoboDK
+## Documents
 
-Lance la simulation pour visualiser les trajectoires avant tout déploiement réel.
+- [Rapport final du projet](docs/Rapport-Final-S7_Projet-EA-SA_Niryo-Ned2.pdf)
+- [Fiche de sécurité Ned2](docs/FicheDeSecuriteNed2%20%281%29.pdf)
 
-```bash
-python scripts/simulation_robodk.py
-```
-
-RoboDK s'ouvre et le robot Ned2 effectue les mouvements demandés en simulation.
-
----
-
-### Étape 3 — Exécuter sur le robot réel
-
-Une fois la simulation validée, lance l'exécution réelle avec NiryoStudio ouvert en parallèle.
-
-```bash
-python scripts/execution_robot.py
-```
-
-> ⚠️ **Sécurité** : une personne doit rester à proximité du bouton d'arrêt d'urgence pendant toute l'exécution. Dégager la zone de travail avant de lancer le script.
-
----
-
-## Sécurité
-
-Ce projet a été développé avec une attention particulière aux mesures de sécurité liées à l'utilisation d'un bras robotique collaboratif. La fiche de sécurité complète du Niryo Ned2 est incluse dans ce dépôt (`docs/FicheDeSecurite.pdf`).
-
----
-
-## Rapport
-
-Le rapport complet du projet est disponible ici : [`docs/Rapport-Final.pdf`](./docs/Rapport-Final-S7_Projet-EA-SA_Niryo-Ned2.pdf)
+Les scripts historiques sont conservés. Cette réorganisation améliore la documentation ; elle ne constitue pas une validation sur robot ni une correction des algorithmes de mouvement.
