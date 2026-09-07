@@ -1,18 +1,18 @@
-# Niryo Ned2 — du paramétrage à la simulation robotique
+# Robotique & Python — Pick-and-Place avec Niryo Ned2 et RoboDK
 
 **Robotique collaborative · Python · Tkinter · RoboDK · PyNiryo**
 
-Projet de qualification fonctionnelle d'une plateforme robotique collaborative réalisé à **l'INSA Centre Val de Loire**, dans le cadre du cours **EA Systèmes Avancés**.
+J’ai réalisé ce projet de qualification fonctionnelle d’une plateforme robotique collaborative avec **Adam Aoubiza**, à **l’INSA Centre Val de Loire**, dans le cadre du cours **EA Systèmes Avancés**.
 
-**Équipe : Alae Zerrouq et Adam Aoubiza** · **Encadrant : Vincent Idasiak**
+**Alae ZERROUQ** · **Projet en binôme avec Adam Aoubiza** · **Encadrant : Vincent Idasiak**
 
 ## Le projet en quelques mots
 
-Concevoir une chaîne de commande pour un bras **Niryo Ned2** : saisir un scénario de manipulation, visualiser les déplacements dans RoboDK, puis préparer leur transposition vers le robot avec PyNiryo. Deux scénarios sont explorés : le **pick-and-place** et l'**empilement / désempilement** appelé « pyramide » dans les scripts.
+Notre objectif : concevoir une chaîne de commande pour un bras **Niryo Ned2** : saisir un scénario de manipulation, visualiser les déplacements dans RoboDK, puis préparer leur transposition vers le robot avec PyNiryo. Deux scénarios sont explorés : le **pick-and-place** et l'**empilement / désempilement** appelé « pyramide » dans les scripts.
 
 Ce dépôt rassemble le code académique et les documents du projet. Les scripts de simulation et d'exécution comportent des défauts identifiés ; leur remise en état est nécessaire avant une exécution complète. Le [statut technique](docs/STATUT_TECHNIQUE.md) distingue précisément les éléments disponibles et les limites.
 
-## Compétences mises en pratique
+## Mes compétences mises en pratique
 
 | Compétence | Réalisation dans le dépôt |
 |---|---|
@@ -23,7 +23,7 @@ Ce dépôt rassemble le code académique et les documents du projet. Les scripts
 | Transfert simulation-réel | Mise en relation des scénarios simulés et des mouvements physiques |
 | Documentation technique | Rapport de projet et fiche de sécurité |
 
-Les contributions sont présentées comme celles de l'équipe ; aucune répartition individuelle non documentée n'est attribuée.
+Je présente ici notre travail en binôme et les compétences que j’y ai mises en pratique.
 
 ## Architecture prévue
 
